@@ -9,7 +9,6 @@
           <v-card class="cardPost"
             elevation="4"
             color="#F2F2F2"
-            
           >
           <v-img src="../assets/beyondCard.png" width="300"></v-img>
 

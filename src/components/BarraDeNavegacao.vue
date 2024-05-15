@@ -11,7 +11,9 @@
   
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
   
-        <v-app-bar-title>Biblioteca</v-app-bar-title>
+        <v-spacer></v-spacer>
+
+        <v-app-bar-title> Biblioteca </v-app-bar-title>
   
         <v-spacer></v-spacer>
   
