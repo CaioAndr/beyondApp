@@ -1,3 +1,9 @@
+<template>
+    <v-app>
+        Tela de Cursos
+    </v-app>
+</template>
+
 <script>
 
     export default {

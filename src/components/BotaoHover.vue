@@ -119,6 +119,9 @@
   
   <script>
 
+  import { collection, getDocs } from 'firebase/firestore'
+  import { db } from '/config/firebase.js'
+
     export default {
       data() {
         return {
@@ -130,8 +133,24 @@
         };
       },
 
+      watch: {
+        group () {
+          this.drawer = false
+        },
+      },
+        mounted() {
+          this.getEventos();
+        },
+
     methods: {
-    addPost() {
+      async addPost() {
+        try {
+        await this.$store.dispatch('sendEvent', {
+        title: this.title,
+        subtitle: this.subtitle,
+        description: this.description,
+        image: this.image
+      });
 
       const newPost = {
         title: this.title,
@@ -142,15 +161,24 @@
 
         this.$emit('newPost', newPost);
 
-        this.title = '';
-        this.subtitle = '';
-        this.description = '';
-        this.image = null;
+          this.title = '';
+          this.subtitle = '';
+          this.description = '';
+          this.image = null;
 
+          this.dialog = false;
+
+      await this.getPost();
+
+        this.novoEvento = { title: '', subtitle: '', description: '', image: null };
         this.dialog = false;
+      } 
+        catch(error) {
+          console.log("Erro ao adcionar evento", error);
+        }
       },
 
-        handleImageUpload(event) {
+      async handleImageUpload(event) {
         const file = event.target.files[0];
         if (file) {
           const reader = new FileReader();
@@ -159,8 +187,22 @@
           };
           reader.readAsDataURL(file);
         }
-      }
-    }
+      },
+
+      async getPosts() {
+        try {
+          const querySnapshot = await getDocs(collection(db, "eventos"));
+          this.eventos = querySnapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              ...doc.data(),
+            };
+          });
+        } catch(error) {
+          console.error("Erro ao obter eventos", error);
+        }
+      },
+    },
   };
 
   </script>

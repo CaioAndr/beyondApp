@@ -1,6 +1,6 @@
 
 <template> 
-  <v-app id="fundo">
+  <v-app id="fundoClaro">
 
     <BarraDeNavegacao />
 
@@ -37,7 +37,7 @@ import FooterNav from '@/components/FooterNav.vue';
 
 <style>
 
-#fundo {
+#fundoClaro {
   background: #CDC1D9;
   font-family: Arial, Helvetica, sans-serif;
 }

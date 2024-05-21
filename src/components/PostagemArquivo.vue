@@ -1,7 +1,7 @@
 <template>
 
     <div>
-      <v-container>
+      <v-container fluid>
 
       <v-row>
         <v-col v-for="(post, index) in posts" :key="index">
@@ -17,7 +17,7 @@
             <v-card-text> {{ post.description }} </v-card-text>
 
             <v-col>
-              <v-btn text color="#f2f2f2" @click="deletePost(index)">Excluir</v-btn>
+              <v-btn text color="#f2f2f2" @click="editarPost(evento)">EDITAR</v-btn>
             </v-col>
 
           </v-card>
@@ -51,10 +51,36 @@
         this.posts.push(newPost);
       },
 
-      deletePost(index) {
-        this.posts.splice(index, 1);
-      }
-    }
+      editarPost(evento) {
+        this.eventoEditando = { ...evento };
+        this.dialogEditar = true;
+        this.indexEditado = this.eventos.indexOf(evento);
+        this.eventoId = evento.id;
+      },
+
+      salvarEdicao() {
+        this.$store.dispatch('updateEvent', { ...this.eventoEditando, id: this.eventoId });
+        this.getEventos();
+        this.dialogEditar = false;
+        this.eventoEditando = { title: '', subtitle: '', description: '', image: null };
+        this.eventoId = -1;
+      },
+
+      cancelarEdicao() {
+        this.dialogEditar = false; 
+        this.eventoEditando = { title: '', subtitle: '', description: '', image: null }; 
+      },
+
+      deletePost() {
+        if (confirm("Tem certeza que deseja excluir esta postagem?")) {
+          const postParaExcluir = this.post[this.indexEditado];
+          this.$store.dispatch('deletePost', postParaExcluir);
+          this.dialogEditar = false;
+          this.postEditando = { title: '', subtitle: '', description: '', image: null };
+          this.indexEditado = -1;
+          this.getEventos();        }
+      },
+    },
   };
 </script>
 

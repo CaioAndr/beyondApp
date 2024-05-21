@@ -18,7 +18,7 @@ import FazerCadastro from '../components/FazerCadastro.vue';
         goTo(path) {
         this.$router.push(path)
         }
-   } 
+   }, 
 }
     
 </script>

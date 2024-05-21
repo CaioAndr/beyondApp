@@ -6,12 +6,13 @@
         <v-col cols="12" sm="8" md="4">
 
           <!-- TÍTULO FORMULÁRIO -->
-            <v-card id="fundo">
+            <v-card id="fundoClaro">
               <v-card-title>
                 <v-spacer></v-spacer>
                   <v-text class="tituloCadastro ">Criar Conta</v-text>
                   <v-spacer></v-spacer>
                 </v-card-title>
+
               <v-card-text>
                 <v-form v-model="valid" ref="form">
 
@@ -42,9 +43,9 @@
                     <v-text-field
                         v-model="confirmPassword"
                         solo
-                        :rules="passwordRules"
+                        :rules="confirmPasswordRules"
                         :type="'password'"
-                        label="Senha"
+                        label="Confirmar Senha"
                         required
                         background-color="#7451A6"
                         dark
@@ -60,17 +61,24 @@
 
                   <!-- BOTÃO DE IR PRA TELA DE LOGIN -->
                     <v-col>
-                      <v-btn color="#5A358C" class="botaoLogin" dark @click="navigateToLogin">Entrar</v-btn>
+                      <v-btn color="#5A358C" 
+                      class="botaoLogin" 
+                      dark 
+                      block
+                      @click="navigateToLogin">Login</v-btn>
                     </v-col>
                     
                     <!-- BOTÃO DE CRIAR CONTA E ENTRAR -->
                       <v-col>
-                        <v-btn color="#5A358C" class="botaoLogin" dark @click="criarConta">Criar Conta</v-btn>
+                        <v-btn color="#5A358C" 
+                        class="botaoLogin" 
+                        dark 
+                        block
+                        @click="createAcc">Criar Conta</v-btn>
                       </v-col>
                     <v-spacer></v-spacer>
                 </v-row>
               </v-card-actions>
-
           </v-card>
         </v-col>
       </v-row>
@@ -83,12 +91,13 @@
   export default {
 
     data() {
+
       return {
         email: '',
         password: '',
         confirmPassword:'',
-
         valid: false,
+
         emailRules: [
           v => !!v || 'E-mail é necessário',
           v => /.+@.+\..+/.test(v) || 'E-mail deve ser válido',
@@ -97,7 +106,17 @@
           v => !!v || 'Senha é necessária',
           v => v.length >= 6 || 'Senha deve ter pelo menos 6 caracteres',
         ],
+        confirmPasswordRules: [
+        v => !!v || 'Confirmação de senha é necessária',
+        v => v === this.password || 'As senhas devem corresponder',
+        ],
       };
+    },
+
+    watch: {
+    password() {
+      this.$refs.form.validate();
+      }
     },
 
     methods: {
@@ -106,18 +125,22 @@
       this.$router.push('/login');
       },
 
-      cadastro() {
-        if (this.$refs.form.validate()) {
-            
-          console.log('Email:', this.email);
-          console.log('Senha:', this.password);
-          console.log('ConfirmarSenha:', this.confirmPassword);
+      createAcc() {
+        if (this.$refs.form.validate())
+            this.$store.dispatch("create", {
+                email: this.email,
+                password: this.password,
 
-          this.$router.push('/biblioteca');
-        }
+            }).then(() => {
+              console.log("Conta criada com sucesso!");
+                this.$router.push('/login');
+
+            }).catch(error => {
+                console.error("Erro ao criar conta:", error);
+            });
+        },
       },
-    },
-  };
+    };
 
   </script>
   

@@ -1,16 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Login from '../pages/Login.vue'
-import Calendario from '../pages/Calendario.vue'
-import Cadastro from '../pages/Cadastro.vue'
-import TelaDeUsuario from '../pages/TelaDeUsuario.vue'
-import TelaDeCusos from '../pages/TelaDeCusos.vue'
-import Biblioteca from '../pages/Biblioteca.vue'
+    import Home from '../pages/Home.vue'
+
+    import Login from '../pages/Login.vue'
+    import Cadastro from '../pages/Cadastro.vue'
+
+    import Biblioteca from '../pages/Biblioteca.vue'
+    import Calendario from '../pages/Calendario.vue'
+    import TelaDeUsuario from '../pages/TelaDeUsuario.vue'
+    import TelaDeCusos from '../pages/TelaDeCusos.vue'
+    import TelaDeForum from '../pages/TelaDeForum.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+
     {
         path: '/biblioteca',
         name: 'Biblioteca',
@@ -43,9 +53,15 @@ const routes = [
     },
 
     {
-        path: '/calendário',
+        path: '/calendario',
         name: 'Calendário',
         component: Calendario
+    },
+
+    {
+        path: '/forum',
+        name: 'Fórum',
+        component: TelaDeForum
     }
 ]
 

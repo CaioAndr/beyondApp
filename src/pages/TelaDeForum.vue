@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        Tela de Calendário
+        Tela de Fórum
     </v-app>
 </template>
 

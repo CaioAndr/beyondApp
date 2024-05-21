@@ -13,11 +13,11 @@
         <v-spacer></v-spacer>
   
         <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
+          <!-- <v-icon>mdi-magnify</v-icon> -->
         </v-btn>
   
         <v-btn icon>
-          <v-icon>mdi-dots-vertical</v-icon>
+          <!-- <v-icon>mdi-dots-vertical</v-icon> -->
         </v-btn>
       </v-app-bar>
 
@@ -51,10 +51,14 @@
       return {
         drawer: false,
         menuItems: [
-          { text: 'Biblioteca', value: 'biblioteca', routeName: 'Home' },
+          { text: 'Home', value: 'home', routeName: 'Home'},
+
+          { text: 'Biblioteca', value: 'biblioteca', routeName: 'Biblioteca' },
           { text: 'Usuário', value: 'usuario', routeName: 'Usuário' },
           { text: 'Curso', value: 'curso', routeName: 'Cursos' },
           { text: 'Calendário', value: 'calendario', routeName: 'Calendário' },
+          { text: 'Fórum', value: 'forum', routeName: 'Fórum' },
+          
         ],
         selectedItem: null
       };

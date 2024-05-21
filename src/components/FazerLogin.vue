@@ -5,7 +5,7 @@
         <v-col cols="12" sm="8" md="4">
 
           <!-- TÍTULO FORMULÁRIO -->
-            <v-card id="fundo">
+            <v-card id="fundoClaro">
               <v-card-title>
                 <v-spacer></v-spacer>
                   <v-text class="tituloLogin">Login</v-text>
@@ -47,12 +47,20 @@
 
                   <!-- BOTÃO DE CADASTRO -->
                     <v-col>
-                      <v-btn color="#5A358C" class="botaoLogin" dark @click="navigateToCadastro">Criar Conta</v-btn>
+                      <v-btn color="#5A358C" 
+                      class="botaoLogin" 
+                      dark 
+                      block
+                      @click="navigateToCadastro">Criar Conta</v-btn>
                     </v-col>
                     
                     <!-- BOTÃO DE ENTRAR -->
                       <v-col>
-                        <v-btn color="#5A358C" class="botaoLogin" dark @click="login">Entrar</v-btn>
+                        <v-btn color="#5A358C" 
+                        class="botaoLogin" 
+                        dark 
+                        block
+                        @click="login">Entrar</v-btn>
                       </v-col>
                     <v-spacer></v-spacer>
                 </v-row>
@@ -74,6 +82,7 @@
         email: '',
         password: '',
         valid: false,
+
         emailRules: [
           v => !!v || 'E-mail é necessário',
           v => /.+@.+\..+/.test(v) || 'E-mail deve ser válido',
@@ -92,14 +101,20 @@
       },
 
       login() {
-        if (this.$refs.form.validate()) {
-          console.log('Email:', this.email);
-          console.log('Senha:', this.password);
-          this.$router.push('/biblioteca');
-        }
+        this.$store.dispatch("login", {
+                email: this.email,
+                password: this.password,
+
+            }).then(() => {
+              this.$router.push('/biblioteca');
+
+            }).catch(error => {
+                console.error("Erro ao fazer login:", error);
+                alert("Erro ao fazer login. Verifique suas credenciais e tente novamente.");
+            });
+        },
       },
-    },
-  };
+    };
 
   </script>
   
